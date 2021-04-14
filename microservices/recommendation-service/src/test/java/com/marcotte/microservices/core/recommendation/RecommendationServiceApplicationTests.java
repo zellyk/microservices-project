@@ -86,7 +86,7 @@ class RecommendationServiceApplicationTests {
 				.expectHeader().contentType(MediaType.APPLICATION_JSON)
 				.expectBody()
 				.jsonPath("$.path").isEqualTo("/recommendation")
-				.jsonPath("$.message").isEqualTo("invalid productId:" + PRODUCT_ID_INVALID_Negative_VALUE);
+				.jsonPath("$.message").isEqualTo("Invalid productId: " + PRODUCT_ID_INVALID_Negative_VALUE);
 
 	}
 

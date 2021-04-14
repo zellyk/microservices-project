@@ -25,7 +25,7 @@ public class RecommendationRESTController implements RecommendationServiceAPI {
     @Override
     public List<Recommendation> getRecommendations(int productId) {
 
-        if(productId < 1 )throw new InvalidInputException("invalid productId:" + productId);
+        if(productId < 1 )throw new InvalidInputException("Invalid productId: " + productId);
         if(productId == 113)
         {
             LOG.debug("No recommendations found for productId: {}", + productId);
