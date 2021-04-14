@@ -127,7 +127,6 @@ class ProductCompositeServiceApplicationTests {
 				.expectBody()
 				.jsonPath("$.path").isEqualTo("/product-composite/" + PRODUCT_ID_INVALID_STRING)
 				.jsonPath("$.message").isEqualTo("Type mismatch.");
-
 	}
 
 
