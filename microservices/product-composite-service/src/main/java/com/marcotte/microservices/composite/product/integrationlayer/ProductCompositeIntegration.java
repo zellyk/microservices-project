@@ -117,10 +117,10 @@ public class ProductCompositeIntegration implements ProductServiceAPI, Recommend
     @Override
     public List<Review> getReviews(int productId) {
         try{
-            String url = reviewServiceUrl + productId;
+                String url = reviewServiceUrl + productId;
 
-            LOG.debug("Will call getReviews API on URL: {}", url);
-            List<Review> reviews = restTemplate.exchange(
+                LOG.debug("Will call getReviews API on URL: {}", url);
+                List<Review> reviews = restTemplate.exchange(
                     url,
                     HttpMethod.GET,
                     null,
