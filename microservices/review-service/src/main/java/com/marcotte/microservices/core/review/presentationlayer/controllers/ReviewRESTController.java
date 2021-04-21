@@ -1,12 +1,10 @@
 package com.marcotte.microservices.core.review.presentationlayer.controllers;
 
 
-import com.marcotte.api.core.recommendation.Recommendation;
-import com.marcotte.api.core.recommendation.RecommendationServiceAPI;
+
 import com.marcotte.api.core.review.Review;
 import com.marcotte.api.core.review.ReviewServiceAPI;
 import com.marcotte.utils.exceptions.InvalidInputException;
-import com.marcotte.utils.exceptions.NotFoundException;
 import com.marcotte.utils.http.ServiceUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -19,7 +19,6 @@ public class ProductCompositeRESTController implements ProductCompositeServiceAP
     private final ServiceUtil serviceUtil;
     private final ProductCompositeIntegration integration;
 
-
     public ProductCompositeRESTController(ServiceUtil serviceUtil, ProductCompositeIntegration integration) {
         this.serviceUtil = serviceUtil;
         this.integration = integration;
@@ -27,7 +26,6 @@ public class ProductCompositeRESTController implements ProductCompositeServiceAP
 
     @Override
     public ProductAggregate getProduct(int productId) {
-
         Product product = integration.getProduct(productId);
         if(product == null) throw new NotFoundException("No product found for productId: {}" + productId);
 
@@ -36,8 +34,6 @@ public class ProductCompositeRESTController implements ProductCompositeServiceAP
         List<Review> reviews = integration.getReviews(productId);
 
         return createProductAggregate(product, recommendations, reviews, serviceUtil.getServiceAddress());
-
-
     }
 
     private ProductAggregate createProductAggregate(Product product, List<Recommendation> recommendations, List<Review> reviews, String serviceAddress){
