@@ -24,10 +24,13 @@ public class ProductEntity {
     public ProductEntity() {
     }
 
-    public ProductEntity(String name, int weight) {
+    public ProductEntity(int productId, String name, int weight) {
+        this.productId = productId;
         this.name = name;
         this.weight = weight;
     }
+
+
 
     public String getId() {
         return id;
