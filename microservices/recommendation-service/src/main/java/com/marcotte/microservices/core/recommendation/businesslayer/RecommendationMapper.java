@@ -10,11 +10,21 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface RecommendationMapper {
-    @Mapping(target = "serviceAddress",ignore = true)
-    List<Recommendation> entityToModel(List<RecommendationEntity> entity);
+
     @Mappings({
-            @Mapping(target = "id",ignore = true),
-            @Mapping(target = "version",ignore = true)
+            @Mapping(target = "serviceAddress",ignore = true),
+            @Mapping(target = "rate", source = "entity.rating")
+
     })
-    List<RecommendationEntity> modelToEntity(List<Recommendation> model);
+    Recommendation entityToModel(RecommendationEntity entity);
+
+    @Mappings({
+            @Mapping(target = "id", ignore = true),
+            @Mapping(target = "rating", source = "model.rate"),
+            @Mapping(target = "version", ignore = true)
+    })
+    RecommendationEntity modelToEntity(Recommendation model);
+
+    List<Recommendation> entityListToModelList(List<RecommendationEntity> entity);
+    List<RecommendationEntity> modelListToEntityList(List<Recommendation> model);
 }

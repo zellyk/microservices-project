@@ -7,5 +7,5 @@ import java.util.List;
 public interface RecommendationService {
     List<Recommendation> findByProductId(int productId);
     Recommendation createRecommendation(Recommendation model);
-    void deleteRecommendation(int productId);
+    void deleteRecommendations(int productId);
 }
