@@ -23,7 +23,7 @@ public class ReviewRESTController implements ReviewServiceAPI {
     }
 
     @Override
-    public List<Review> getProductById(int productId) {
+    public List<Review> getReviews(int productId) {
 
         if(productId < 1) throw new InvalidInputException("Invalid productId: " + productId);
 

@@ -1,5 +1,6 @@
 package com.marcotte.microservices.composite.product;
 
+import com.marcotte.api.composite.product.ProductAggregate;
 import com.marcotte.api.core.product.Product;
 import com.marcotte.api.core.recommendation.Recommendation;
 import com.marcotte.api.core.review.Review;
@@ -18,7 +19,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import java.util.Collections;
+import static reactor.core.publisher.Mono.just;
+
 
 import static java.util.Collections.singletonList;
 import static org.mockito.BDDMockito.given;
@@ -84,6 +86,19 @@ class ProductCompositeServiceApplicationTests {
 				.jsonPath("$.reviews.length()").isEqualTo(expectedLength);
 
 	}
+
+	@Test
+	public void createCompositeProductNoRecommendationsNoReviews() {
+
+		ProductAggregate compositeProduct = new ProductAggregate(1, "name", 1, null, null, null);
+
+		client.post()
+				.uri("/product-composite")
+				.body(just(compositeProduct), ProductAggregate.class)
+				.exchange()
+				.expectStatus().isOk();
+	}
+
 
 	@Test
 	public void getProductNotFound(){

@@ -5,9 +5,13 @@ import com.marcotte.api.composite.product.*;
 import com.marcotte.api.core.product.Product;
 import com.marcotte.api.core.recommendation.Recommendation;
 import com.marcotte.api.core.review.Review;
+import com.marcotte.microservices.composite.product.businesslayer.ProductCompositeService;
+import com.marcotte.microservices.composite.product.businesslayer.ProductCompositeServiceImpl;
 import com.marcotte.microservices.composite.product.integrationlayer.ProductCompositeIntegration;
 import com.marcotte.utils.exceptions.NotFoundException;
 import com.marcotte.utils.http.ServiceUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -16,59 +20,36 @@ import java.util.stream.Collectors;
 @RestController
 public class ProductCompositeRESTController implements ProductCompositeServiceAPI {
 
-    private final ServiceUtil serviceUtil;
-    private final ProductCompositeIntegration integration;
+    private static final Logger LOG = LoggerFactory.getLogger(ProductCompositeServiceImpl.class);
 
-    public ProductCompositeRESTController(ServiceUtil serviceUtil, ProductCompositeIntegration integration) {
-        this.serviceUtil = serviceUtil;
-        this.integration = integration;
+    private final ProductCompositeService productCompositeService;
+
+    public ProductCompositeRESTController(ProductCompositeService productCompositeService) {
+        this.productCompositeService = productCompositeService;
     }
 
     @Override
     public ProductAggregate getProduct(int productId) {
-        Product product = integration.getProduct(productId);
-        if(product == null) throw new NotFoundException("No product found for productId: {}" + productId);
 
-        List<Recommendation> recommendations = integration.getRecommendations(productId);
+        LOG.debug("ProductComposite received getProductComposite request.");
 
-        List<Review> reviews = integration.getReviews(productId);
+        ProductAggregate productAggregate = productCompositeService.getProduct(productId);
 
-        return createProductAggregate(product, recommendations, reviews, serviceUtil.getServiceAddress());
+        return productAggregate;
     }
 
-    private ProductAggregate createProductAggregate(Product product, List<Recommendation> recommendations, List<Review> reviews, String serviceAddress){
+    @Override
+    public void createCompositeProduct(ProductAggregate model) {
 
-        // 1. Setup product information
-        int productId = product.getProductId();
-        String name = product.getName();
-        int weight = product.getWeight();
+        LOG.debug("ProductComposite received dreateProductComposite request.");
 
-        // 2. Copy summary recommendation info, if any
-        List<RecommendationSummary> recommendationSummaries = (recommendations == null) ? null :
-                recommendations.stream()
-                        .map(r -> new RecommendationSummary(r.getRecommendationId(), r.getAuthor(), r.getRate()))
-                        .collect(Collectors.toList());
-
-        // 3. Copy summary reviews info, if any
-        List<ReviewSummary> reviewSummaries = (reviews == null) ? null :
-                reviews.stream()
-                        .map(r -> new ReviewSummary(r.getReviewId(), r.getAuthor(), r.getSubject()))
-                        .collect(Collectors.toList());
-
-        // 4. Create info for Microservice Address
-        String productAddress = product.getServiceAddress();
-        String recommendationAddress = (recommendations != null && recommendations.size() > 0)
-                ? recommendations.get(0).getServiceAddress() : "";
-        String reviewAddress = (reviews != null && reviews.size() > 0)
-                ? reviews.get(0).getServiceAddress() : "";
-
-        ServiceAddress serviceAddresses = new ServiceAddress(serviceAddress, productAddress, reviewAddress, recommendationAddress);
-
-        return new ProductAggregate(productId, name, weight, recommendationSummaries, reviewSummaries, serviceAddresses);
+        productCompositeService.createProduct(model);
     }
 
-
-
-
+    @Override
+    public void deleteCompositeProduct(int productId) {
+        LOG.debug("ProductComposite received deleteProductComposite request.");
+        productCompositeService.deleteProduct(productId);
+    }
 
 }

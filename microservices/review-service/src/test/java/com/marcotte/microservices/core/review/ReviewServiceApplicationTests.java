@@ -80,7 +80,7 @@ class ReviewServiceApplicationTests {
 
 		//send the POST request
 		client.post()
-				.uri("/review/")
+				.uri("/review")
 				.body(just(review), Review.class)
 				.accept(MediaType.APPLICATION_JSON)
 				.exchange()

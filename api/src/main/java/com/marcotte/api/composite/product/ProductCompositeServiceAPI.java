@@ -1,8 +1,7 @@
 package com.marcotte.api.composite.product;
 
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 public interface ProductCompositeServiceAPI {
 
@@ -10,4 +9,18 @@ public interface ProductCompositeServiceAPI {
             value = "/product-composite/{productId}",
             produces = "application/json")
     ProductAggregate getProduct(@PathVariable int productId);
+
+
+    @PostMapping(
+            value ="/product-composite",
+            consumes = "application/json"
+    )
+    void createCompositeProduct(@RequestBody ProductAggregate model);
+
+    @DeleteMapping(
+            value ="/product-composite/{productId}")
+    void deleteCompositeProduct(@PathVariable int productId);
+
+
+
 }

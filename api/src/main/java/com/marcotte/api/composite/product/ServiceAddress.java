@@ -13,19 +13,39 @@ public class ServiceAddress {
         this.recommendationAddress = recommendationAddress;
     }
 
+    public ServiceAddress() {
+    }
+
     public String getCompositeAddress() {
-        return this.compositeAddress;
+        return compositeAddress;
+    }
+
+    public void setCompositeAddress(String compositeAddress) {
+        this.compositeAddress = compositeAddress;
     }
 
     public String getProductAddress() {
-        return this.productAddress;
+        return productAddress;
+    }
+
+    public void setProductAddress(String productAddress) {
+        this.productAddress = productAddress;
     }
 
     public String getReviewAddress() {
-        return this.reviewAddress;
+        return reviewAddress;
+    }
+
+    public void setReviewAddress(String reviewAddress) {
+        this.reviewAddress = reviewAddress;
     }
 
     public String getRecommendationAddress() {
-        return this.recommendationAddress;
+        return recommendationAddress;
     }
+
+    public void setRecommendationAddress(String recommendationAddress) {
+        this.recommendationAddress = recommendationAddress;
+    }
+
 }
