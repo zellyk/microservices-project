@@ -28,26 +28,50 @@ public class Review {
     }
 
     public int getProductId() {
-        return this.productId;
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
     public int getReviewId() {
-        return this.reviewId;
+        return reviewId;
+    }
+
+    public void setReviewId(int reviewId) {
+        this.reviewId = reviewId;
     }
 
     public String getAuthor() {
-        return this.author;
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getSubject() {
-        return this.subject;
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
     public String getContent() {
-        return this.content;
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getServiceAddress() {
-        return this.serviceAddress;
+        return serviceAddress;
+    }
+
+    public void setServiceAddress(String serviceAddress) {
+        this.serviceAddress = serviceAddress;
     }
 }
