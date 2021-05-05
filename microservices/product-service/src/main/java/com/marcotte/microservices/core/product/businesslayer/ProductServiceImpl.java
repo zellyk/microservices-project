@@ -33,7 +33,7 @@ public class ProductServiceImpl implements ProductService {
     public Product getProductById(int productId) {
 
         ProductEntity entity =repository.findByProductId(productId)
-                .orElseThrow(() -> new NotFoundException("No product found for productID: " + productId));
+                .orElseThrow(() -> new NotFoundException("No product found for productId: " + productId));
 
         Product response = mapper.entityToModel(entity);
         response.setServiceAddress(serviceUtil.getServiceAddress());
