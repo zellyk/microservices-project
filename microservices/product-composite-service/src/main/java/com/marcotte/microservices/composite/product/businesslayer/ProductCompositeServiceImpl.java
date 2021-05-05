@@ -48,20 +48,29 @@ public class ProductCompositeServiceImpl implements ProductCompositeService{
 
     @Override
     public void createProduct(ProductAggregate model) {
-
-        try{
-            LOG.debug("createCompositeProduct: create a new composite entity for productId: {}", model.getProductId());
-
+        try {
+            LOG.debug("createCompositeProduct: creates a new composite entity for productId: {}", model.getProductId());
             Product product = new Product(model.getProductId(), model.getName(), model.getWeight(), null);
             integration.createProduct(product);
-
-        }
-        catch(RuntimeException ex)
-        {
-            LOG.warn("createCompositeProduct: failed.", ex);
+            if (model.getRecommendations() != null) {
+                model.getRecommendations().forEach(r -> {
+                    Recommendation recommendation = new Recommendation(model.getProductId(), r.getRecommendationId(),
+                            r.getAuthor(), r.getRate(), r.getContent(), null);
+                    integration.createRecommendation(recommendation);
+                });
+            }
+            if (model.getReviews() != null) {
+                model.getReviews().forEach(r ->{
+                    Review review = new Review(model.getProductId(), r.getReviewId(), r.getAuthor(),
+                            r.getSubject(), r.getContent(), null);
+                    integration.createReview(review);
+                });
+            }
+            LOG.debug("createCompositeProduct: composite entities created for productId: {}", model.getProductId());
+        } catch (RuntimeException ex) {
+            LOG.warn("createCompositeProduct failed", ex);
             throw ex;
         }
-
     }
 
     @Override
