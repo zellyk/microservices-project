@@ -51,7 +51,7 @@ public class RecommendationServiceImpl implements RecommendationService{
             LOG.debug("createRecommendation: entity created for productId: {}", model.getProductId());
             return mapper.entityToModel(newEntity);
         }catch (DuplicateKeyException dke){
-            throw new InvalidInputException("Duplicate key, productId: " +model.getProductId());
+            throw new InvalidInputException("Duplicate key, productId: " + model.getProductId());
 
         }
 
@@ -61,7 +61,7 @@ public class RecommendationServiceImpl implements RecommendationService{
     public void deleteRecommendations(int productId) {
 
         LOG.debug("deleteRecommendation: delete entity with recommendationId: {} ", productId);
-        repository.findByProductId(productId);
+        repository.deleteAll(repository.findByProductId(productId));
 
 
 

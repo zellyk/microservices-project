@@ -104,6 +104,7 @@ class RecommendationServiceApplicationTests {
 
 	@Test
 	public void getRecommendationsInvalidParameterNegativeValue(){
+
 		client.get()
 				.uri("/recommendation?productId=" + PRODUCT_ID_INVALID_Negative_VALUE)
 				.accept(MediaType.APPLICATION_JSON)
@@ -129,7 +130,6 @@ class RecommendationServiceApplicationTests {
 				.expectHeader().contentType(MediaType.APPLICATION_JSON)
 				.expectBody()
 				.jsonPath("$.length()").isEqualTo(expectedLength);
-
 	}
 
 	@Test
@@ -146,7 +146,8 @@ class RecommendationServiceApplicationTests {
 				.body(just(recommendation), Recommendation.class)
 				.accept(MediaType.APPLICATION_JSON)
 				.exchange()
-				.expectStatus().isOk()
+				.expectStatus()
+				.isOk()
 				.expectHeader().contentType(MediaType.APPLICATION_JSON)
 				.expectBody();
 
@@ -167,8 +168,8 @@ class RecommendationServiceApplicationTests {
 				.uri("/recommendation?productId=" + PRODUCT_ID_OKAY)
 				.accept(MediaType.APPLICATION_JSON)
 				.exchange()
-				.expectStatus().isOk()
-				.expectHeader().contentType(MediaType.APPLICATION_JSON)
+				.expectStatus()
+				.isOk()
 				.expectBody();
 
 		assertEquals(0, repository.findByProductId(PRODUCT_ID_OKAY).size());

@@ -30,15 +30,10 @@ public class RecommendationRESTController implements RecommendationServiceAPI {
     public List<Recommendation> getRecommendations(int productId) {
 
         if(productId < 1 )throw new InvalidInputException("Invalid productId: " + productId);
-//        if(productId == 113)
-//        {
-//            LOG.debug("No recommendations found for productId: {}", + productId);
-//            return new ArrayList<>();
-//        }
 
           List<Recommendation> listRecommendations = recommendationService.findByProductId(productId);
-          LOG.debug("Recommendations found for productId: {}", productId);
-          LOG.debug("Recommendation1 productId= {}", listRecommendations.get(0).getProductId());
+
+          LOG.debug("Recommendations size response= {}", listRecommendations.size());
 
         return listRecommendations;
     }
@@ -52,7 +47,7 @@ public class RecommendationRESTController implements RecommendationServiceAPI {
     }
 
     @Override
-    public void deleteRecommendation(int productId) {
+    public void deleteRecommendations(int productId) {
         LOG.debug("REST Controller deleteRecommendation: Trying ro delete recommendations for the product with productId: {}", productId);
         recommendationService.deleteRecommendations(productId);
 

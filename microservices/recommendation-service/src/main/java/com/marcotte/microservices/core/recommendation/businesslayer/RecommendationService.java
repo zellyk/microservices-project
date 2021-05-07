@@ -5,7 +5,10 @@ import com.marcotte.api.core.recommendation.Recommendation;
 import java.util.List;
 
 public interface RecommendationService {
-    List<Recommendation> findByProductId(int productId);
-    Recommendation createRecommendation(Recommendation model);
-    void deleteRecommendations(int productId);
+
+    public List<Recommendation> findByProductId(int productId);
+
+    public Recommendation createRecommendation(Recommendation model);
+
+    public void deleteRecommendations(int productId);
 }

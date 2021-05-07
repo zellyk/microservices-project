@@ -15,8 +15,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
-import static org.springframework.data.repository.core.support.RepositoryComposition.just;
+import static reactor.core.publisher.Mono.just;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = {"spring.datasource.url=jdbc:h2:mem:review-db"})
 @ExtendWith(SpringExtension.class)
@@ -72,7 +71,7 @@ class ReviewServiceApplicationTests {
 	@Test
 	public void createReview(){
 		int expectedSize =1;
-		//create the recommendaiton
+		//create the recommendation
 
 		Review review = new Review(PRODUCT_ID_OKAY, REVIEW_ID,
 				"Author " + REVIEW_ID, "Subject" + REVIEW_ID, "Content " + REVIEW_ID, "SA");

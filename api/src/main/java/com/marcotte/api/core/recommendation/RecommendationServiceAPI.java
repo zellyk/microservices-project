@@ -19,6 +19,6 @@ public interface RecommendationServiceAPI {
     Recommendation createRecommendation(@RequestBody Recommendation model);
 
     @DeleteMapping(value = "/recommendation")
-    void deleteRecommendation(@RequestParam (value = "productId", required = true)int productId);
+    void deleteRecommendations(@RequestParam (value = "productId", required = true)int productId);
 
 }
