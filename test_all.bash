@@ -64,6 +64,43 @@ function testUrl() {
   fi;
 }
 
+function setupTestdata() {
+  body=\
+'{"productId":1,"name":"product 1","weight":1, "recommendations":[
+        {"recommendationId":1,"author":"author 1","rate":1,"content":"content 1"},
+        {"recommendationId":2,"author":"author 2","rate":2,"content":"content 2"},
+        {"recommendationId":3,"author":"author 3","rate":3,"content":"content 3"}
+    ], "reviews":[
+        {"reviewId":1,"author":"author 1","subject":"subject 1","content":"content 1"},
+        {"reviewId":2,"author":"author 2","subject":"subject 2","content":"content 2"},
+        {"reviewId":3,"author":"author 3","subject":"subject 3","content":"content 3"}
+    ]}'
+    recreateComposite 1 "$body"
+    body=\
+'{"productId":113,"name":"product 113","weight":113, "reviews":[
+    {"reviewId":1,"author":"author 1","subject":"subject 1","content":"content 1"},
+    {"reviewId":2,"author":"author 2","subject":"subject 2","content":"content 2"},
+    {"reviewId":3,"author":"author 3","subject":"subject 3","content":"content 3"}
+]}'
+    recreateComposite 113 "$body"
+    body=\
+'{"productId":213,"name":"product 213","weight":213, "recommendations":[
+       {"recommendationId":1,"author":"author 1","rate":1,"content":"content 1"},
+       {"recommendationId":2,"author":"author 2","rate":2,"content":"content 2"},
+       {"recommendationId":3,"author":"author 3","rate":3,"content":"content 3"}
+]}'
+    recreateComposite 213 "$body"
+}
+
+function recreateComposite() {
+    local productId=$1
+    local composite=$2
+    assertCurl 200 "curl -X DELETE http://$HOST:$PORT/product-composite/${productId} -s"
+    curl -X POST http://$HOST:$PORT/product-composite -H "Content-Type:
+    application/json" --data "$composite"
+}
+
+
 function waitForService() {
   url=$@
   echo -n "Wait for: $url... "
@@ -96,9 +133,14 @@ echo "$ docker-compose up -d"
   docker-compose up -d
 fi
 
-waitForService http://$HOST:${PORT}/product-composite/1
+# waitForService http://$HOST:${PORT}/product-composite/1
 
 # Verify that a normal request works, expect three recommendations and three reviews
+
+waitForService curl -X DELETE http://$HOST:$PORT/product-composite/13
+
+setupTestdata
+
 
 assertCurl 200 "curl http://$HOST:$PORT/product-composite/1 -s"
 assertEqual 1 $(echo $RESPONSE | jq .productId)

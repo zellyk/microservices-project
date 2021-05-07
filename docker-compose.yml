@@ -47,6 +47,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=rootpwd
       - MYSQL_DATABASE=review-db
+      - MYSQL_USER=user
       - MYSQL_PASSWORD=pwd
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-uuser", "-ppwd", "-h", "localhost"]
